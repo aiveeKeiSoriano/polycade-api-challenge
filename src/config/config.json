@@ -1,0 +1,26 @@
+{
+    "development": {
+      "username": "polycade",
+      "password": "polycade",
+      "database": "polycade",
+      "host": "127.0.0.1",
+      "port": "5435",
+      "dialect": "postgres"
+    },
+    "test": {
+      "username": "polycade",
+      "password": "polycade",
+      "database": "polycade",
+      "host": "127.0.0.1",
+      "port": "5435",
+      "dialect": "postgres"
+    },
+    "production": {
+      "username": "polycade",
+      "password": "polycade",
+      "database": "polycade",
+      "port": "5435",
+      "host": "127.0.0.1",
+      "dialect": "postgres"
+    }
+  }
