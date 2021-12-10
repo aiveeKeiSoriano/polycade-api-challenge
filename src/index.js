@@ -1,9 +1,13 @@
 import env from 'dotenv'
-env.config()
 
 import Koa from 'koa'
-import { sequelize } from './db'
 import bodyParser from 'koa-bodyparser'
+import pricingModelsRouter from './routes/pricing-models'
+import machinesRouter from './routes/machines'
+
+env.config()
+
+const sequelize = require('./db');
 
 export const app = new Koa()
 const PORT = process.env.PORT || 1337
@@ -16,9 +20,6 @@ try {
 }
 
 // sequelize.sync({ force: true })
-
-import pricingModelsRouter from './routes/pricing-models'
-import machinesRouter from './routes/machines'
 
 app.use(bodyParser(
   {

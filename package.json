@@ -5,9 +5,10 @@
 	"scripts": {
 		"lint": "eslint src/index.js",
 		"start": "babel-node src/index.js",
-		"test": "jest --runInBand --verbose --detectOpenHandles --forceExit",
+		"test": "npm run setup:db && jest --runInBand --verbose --detectOpenHandles --forceExit",
 		"watch": "nodemon --exec babel-node --watch src/index.js",
-		"watch-test": "jest --watch"
+		"watch-test": "jest --watch",
+		"setup:db": "node src/models/db-setup.js"
 	},
 	"license": "MIT",
 	"dependencies": {

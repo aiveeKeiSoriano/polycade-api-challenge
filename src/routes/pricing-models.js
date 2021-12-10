@@ -7,7 +7,7 @@ import {
     getModelPrices,
     addModelPrice,
     deleteModelPrice,
-    addDummyData
+    deleteModel
 } from '../controllers/pricing-models'
 
 const router = new Router({
@@ -15,11 +15,11 @@ const router = new Router({
 })
 
 router
-    .get('/add', addDummyData)
     .get('/', getModelsList)
     .post('/', createNewModel)
     .get('/:pmId', getModel)
     .put('/:pmId', updateModel)
+    .delete('/:pmId', deleteModel)
     .get('/:pmId/prices', getModelPrices)
     .post('/:pmId/prices', addModelPrice)
     .delete('/:pmId/prices/:priceId', deleteModelPrice)

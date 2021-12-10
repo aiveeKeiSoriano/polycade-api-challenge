@@ -1,9 +1,9 @@
-
 import { default_pricing } from '../../prices.json'
-import models from '../models'
-import Joi from "joi"
-import Price from '../models/prices'
-const { PricingModel, Machine } = models
+import Joi from 'joi'
+
+const { models } = require('../db')
+
+const { price, pricing, machine } = models
 
 export const createNewMachince = async (ctx) => {
     const schema = Joi.object().keys({
@@ -17,42 +17,30 @@ export const createNewMachince = async (ctx) => {
         ctx.throw(400, 'Invalid request')
     }
 
-    const model = Machine
+    const model = machine
     const newMachine = await model.create(ctx.request.body)
     ctx.response.body = newMachine.id
 }
 
-export const updateMachinePrices = async (ctx) => {
-    const machine = await Machine.findOne({
+export const deleteMachine = async (ctx) => {
+    await machine.destroy({
         where: {
             id: ctx.params.machineId
         }
     })
-    if (!machine) {
-        ctx.throw(404, 'Machine not found')
-    }
-    const pricingModel = await PricingModel.findOne({
-        where: {
-            id: ctx.params.pmId
-        }
-    })
-    if (!pricingModel) {
-        ctx.throw(404, 'Pricing Model not found')
-    }
-    machine.setPricing(pricingModel.id)
-    ctx.body = machine
+    ctx.response.body = "deleted successfully"
 }
 
-export const deleteMachinePrice = async (ctx) => {
-    const machine = await Machine.findOne({
+export const updateMachinePrices = async (ctx) => {
+    const machineFound = await machine.findOne({
         where: {
             id: ctx.params.machineId
         }
     })
-    if (!machine) {
+    if (!machineFound) {
         ctx.throw(404, 'Machine not found')
     }
-    const pricingModel = await PricingModel.findOne({
+    const pricingModel = await pricing.findOne({
         where: {
             id: ctx.params.pmId
         }
@@ -60,24 +48,46 @@ export const deleteMachinePrice = async (ctx) => {
     if (!pricingModel) {
         ctx.throw(404, 'Pricing Model not found')
     }
-    machine.setPricing(null)
-    ctx.body = machine
+    machineFound.setPricing(pricingModel.id)
+    ctx.response.body = machineFound
+};
+
+export const deleteMachinePrice = async (ctx) => {
+    const machineFound = await machine.findOne({
+        where: {
+            id: ctx.params.machineId
+        }
+    })
+    if (!machineFound) {
+        ctx.throw(404, 'Machine not found')
+    }
+    const pricingModel = await pricing.findOne({
+        where: {
+            id: ctx.params.pmId
+        }
+    })
+    if (!pricingModel) {
+        ctx.throw(404, 'Pricing Model not found')
+    }
+    machineFound.setPricing(null)
+    ctx.response.body = machineFound
 }
 
 export const getMachinePrices = async (ctx) => {
-    const machine = await Machine.findOne({
+    const machineFound = await machine.findOne({
         where: {
             id: ctx.params.machineId
         },
-        include: { model: PricingModel, include: { model: Price, as: "pricing" }}
+        include: { model: pricing, include: { model: price, as: 'prices' } }
     })
-    if (!machine) {
+    if (!machineFound) {
         ctx.throw(404, 'Machine not found')
     }
-    if (!machine.PricingId) {
-        ctx.body = default_pricing
+    console.log(machineFound.pricing)
+    if (!machineFound.pricing) {
+        ctx.response.body =  { default_pricing }
     }
     else {
-        ctx.body = machine.Pricing
+        ctx.response.body = machineFound.pricing
     }
 }
