@@ -83,7 +83,6 @@ export const getMachinePrices = async (ctx) => {
     if (!machineFound) {
         ctx.throw(404, 'Machine not found')
     }
-    console.log(machineFound.pricing)
     if (!machineFound.pricing) {
         ctx.response.body =  { default_pricing }
     }

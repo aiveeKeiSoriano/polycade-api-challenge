@@ -82,7 +82,6 @@ export const deleteModel = async (ctx) => {
 
 export const getModelPrices = async (ctx) => {
     const model = pricing;
-    console.log('FAILING', ctx.params.pmId);
     const pricingModelFound = await model.findOne({
         where: {
             id: ctx.params.pmId
@@ -92,7 +91,6 @@ export const getModelPrices = async (ctx) => {
     if (!pricingModelFound) {
         ctx.throw(404, 'Pricing Model not found');
     }
-    console.log(pricingModelFound);
     ctx.response.body = pricingModelFound.prices;
 };
 
@@ -144,8 +142,7 @@ export const addModelPrice = async (ctx) => {
         where
     });
 
-    // await pricingModel.addprice(price)
-    ctx.response.body = priceFound;
+    ctx.response.body = [priceFound[0]];
 };
 
 export const deleteModelPrice = async (ctx) => {
@@ -167,5 +164,5 @@ export const deleteModelPrice = async (ctx) => {
     if (!priceFound) {
         ctx.throw(404, 'price not found');
     }
-    ctx.response.body = priceFound;
+    ctx.response.body = "Deleted successfully";
 };

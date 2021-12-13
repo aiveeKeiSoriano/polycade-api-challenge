@@ -1,19 +1,12 @@
 
 import { app } from '../index'
-import gracefulShutdown from 'http-graceful-shutdown'
 import supertest from 'supertest'
-
-// import { request } from "./test-config"
 
 let server = {}
 let request = {}
-let shutdown = () => { }
 
 beforeAll(async () => {
-    server = app.listen(1337)
-    shutdown = await gracefulShutdown(server, {
-        forceExit: true
-    })
+    server = app.callback(1337)
 });
 
 
@@ -126,7 +119,3 @@ describe('Testing /pricing-models routes', () => {
     })
 
 })
-
-afterAll(async () => {
-    await shutdown()
-});

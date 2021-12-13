@@ -6,6 +6,13 @@
 
 Our apps need to query and store lots of information. We want to make sure that you have a good understanding of JavaScript and Node.js fundamentals. Can you build a simple API that can read data from and write data to a PostgreSQL database with Node.js?
 
+## Setup and run
+  - install npm packages using `npm install`
+  - start the docker container using `docker-compose up`
+  - in another terminal, run `npm run setup:db` to initialize the postgres relations
+  - `npm run test` to run the tests
+  - `npm start` to run the server
+
 ## The Challenge
 
 Build a REST API that will allow Polycade to manage pricing individually on machines remotely with the following:

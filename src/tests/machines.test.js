@@ -1,25 +1,17 @@
 import { app } from '../index';
-import gracefulShutdown from 'http-graceful-shutdown';
 import supertest from 'supertest';
-
-// import { request } from "./test-config"
 
 let server = {};
 let request = {};
-let shutdown = () => {
-};
 
 beforeAll(async () => {
-    server = app.listen(1337);
-    shutdown = await gracefulShutdown(server, {
-        forceExit: true
-    });
+    server = app.callback(1337);
 });
 
 describe('Testing Machine routes', () => {
 
     beforeEach(async () => {
-        request = await supertest(server);
+        request = supertest(server);
     });
 
     test('Setup sample data', async () => {
@@ -89,8 +81,4 @@ describe('Testing Machine routes', () => {
         expect(res.statusCode).toBe(200)
     })
 
-});
-
-afterAll(async () => {
-    await shutdown();
 });

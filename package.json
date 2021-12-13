@@ -5,7 +5,7 @@
 	"scripts": {
 		"lint": "eslint src/index.js",
 		"start": "babel-node src/index.js",
-		"test": "npm run setup:db && jest --runInBand --verbose --detectOpenHandles --forceExit",
+		"test": "jest --runInBand --verbose --detectOpenHandles --forceExit",
 		"watch": "nodemon --exec babel-node --watch src/index.js",
 		"watch-test": "jest --watch",
 		"setup:db": "node src/models/db-setup.js"
@@ -28,7 +28,6 @@
 		"@babel/preset-env": "7.3.4",
 		"babel-eslint": "^10.0.3",
 		"eslint": "^6.8.0",
-		"http-graceful-shutdown": "^3.1.5",
 		"jest": "^25.1.0",
 		"nodemon": "^2.0.2",
 		"sequelize-cli": "^6.3.0",
